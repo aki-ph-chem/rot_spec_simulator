@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 #[derive(Debug)]
 pub struct SymmetricTop {
     a: f64,
@@ -20,15 +22,18 @@ impl SymmetricTop {
 #[derive(Debug)]
 pub struct EnergyManifold {
     eigen_state: SymmetricTop,
-    energy_eigen_values: Vec<Vec<f64>>,
+    energy_eigen_values: Vec<HashMap<i64, f64>>,
 }
 
 impl EnergyManifold {
     pub fn new(j_max: i64, a: f64, b: f64) -> Self {
         let mut energy_eigen_values = vec![];
-
-        for k in 0..=(2 * j_max as usize + 1) {
-            energy_eigen_values.push(vec![0.0; k]);
+        for j in 0..=j_max {
+            let mut k_sub_struecure: HashMap<i64, f64> = HashMap::new();
+            for k in -j..=j {
+                k_sub_struecure.insert(k, 0.0);
+            }
+            energy_eigen_values.push(k_sub_struecure);
         }
 
         Self {
@@ -38,9 +43,9 @@ impl EnergyManifold {
     }
 
     pub fn calc_energy(&mut self) {
-        for (j, k_sub_structure) in &mut self.energy_eigen_values.iter_mut().enumerate() {
-            for (k, energy_eigen_value) in k_sub_structure.iter_mut().enumerate() {
-                *energy_eigen_value = self.eigen_state.energy(j as i64, k as i64);
+        for (j, k_sub_structure) in self.energy_eigen_values.iter_mut().enumerate() {
+            for (k, energy_eigen_value) in k_sub_structure.iter_mut() {
+                *energy_eigen_value = self.eigen_state.energy(j as i64, *k);
             }
         }
     }
