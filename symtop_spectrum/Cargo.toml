@@ -9,6 +9,10 @@ edition = "2021"
 name = "ex_symtop_spectrum"
 path = "examples/ex_symtop_spectrum.rs"
 
+[[example]]
+name = "ex_symtop_spectrum_2"
+path = "examples/ex_symtop_spectrum_2.rs"
+
 [dependencies]
 transition = {path = "../transition"}
 eigen_state = {path = "../eigen_state"}
