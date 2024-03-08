@@ -30,6 +30,15 @@ impl CGCoefficient {
         );
     }
 
+    pub fn update_jm(&mut self, j_1: i64, m_1: i64, j_2: i64, m_2: i64, j_3: i64, m_3: i64) {
+        self.j_1 = j_1;
+        self.m_1 = m_1;
+        self.j_2 = j_2;
+        self.m_2 = m_2;
+        self.j_3 = j_3;
+        self.m_3 = m_3;
+    }
+
     pub fn cg_coefficient(&self, binomials: &mut Binomial) -> f64 {
         utl::calc_cg_binomial_raw(
             self.j_1, self.j_2, self.j_3, self.m_1, self.m_2, self.m_3, binomials,
@@ -64,6 +73,15 @@ impl Wigner3j {
             "( {} ,{}, {} )\n( {}, {}, {} ) ",
             self.j_1, self.j_2, self.j_3, self.m_1, self.m_2, self.m_3
         );
+    }
+
+    pub fn update_jm(&mut self, j_1: i64, m_1: i64, j_2: i64, m_2: i64, j_3: i64, m_3: i64) {
+        self.j_1 = j_1;
+        self.m_1 = m_1;
+        self.j_2 = j_2;
+        self.m_2 = m_2;
+        self.j_3 = j_3;
+        self.m_3 = m_3;
     }
 
     pub fn wigner_3j(&self, binomials: &mut Binomial) -> f64 {
