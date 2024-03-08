@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[example]]
-name = "ex_1"
-path = "examples/ex_1.rs"
+name = "ex_eigen_energy"
+path = "examples/ex_eigen_energy.rs"
 
 [dependencies]
