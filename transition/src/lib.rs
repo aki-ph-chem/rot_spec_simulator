@@ -39,7 +39,7 @@ impl TransitionSymTop {
     pub fn can_transition_j(&self, j_ground: i64, j_excited: i64) -> bool {
         let abs_delta_j = (j_excited - j_ground).abs();
 
-        if abs_delta_j == 0 && abs_delta_j == 1 {
+        if abs_delta_j == 0 || abs_delta_j == 1 {
             return true;
         }
 
