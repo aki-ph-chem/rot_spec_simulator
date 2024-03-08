@@ -1,5 +1,5 @@
 [workspace]
 resolver = "2"
-members = [ "eigen_state", "transition",
+members = [ "eigen_state", "symtop_spectrum", "transition",
     "wigner_j",
 ]

@@ -22,7 +22,7 @@ impl SymmetricTop {
 #[derive(Debug)]
 pub struct EnergyManifold {
     eigen_state: SymmetricTop,
-    energy_eigen_values: Vec<HashMap<i64, f64>>,
+    pub energy_eigen_values: Vec<HashMap<i64, f64>>,
 }
 
 impl EnergyManifold {

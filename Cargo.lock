@@ -7,6 +7,15 @@ name = "eigen_state"
 version = "0.1.0"
 
 [[package]]
+name = "symtop_spectrum"
+version = "0.1.0"
+dependencies = [
+ "eigen_state",
+ "transition",
+ "wigner_j",
+]
+
+[[package]]
 name = "transition"
 version = "0.1.0"
 dependencies = [

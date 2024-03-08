@@ -1,4 +1,5 @@
-use wigner_j::{cg_coefficient::Wigner3j, utl::Binomial};
+use wigner_j::cg_coefficient::Wigner3j;
+use wigner_j::utl::Binomial;
 
 #[derive(Debug)]
 struct TreeJList {
@@ -17,6 +18,7 @@ impl TreeJList {
     }
 }
 
+#[derive(Debug)]
 pub struct TransitionSymTop {
     pub mu_x: f64,
     pub mu_y: f64,

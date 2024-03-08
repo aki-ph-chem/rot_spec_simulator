@@ -1,0 +1,15 @@
+[package]
+name = "symtop_spectrum"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[example]]
+name = "ex_1"
+path = "examples/ex_1.rs"
+
+[dependencies]
+transition = {path = "../transition"}
+eigen_state = {path = "../eigen_state"}
+wigner_j = {path = "../wigner_j"}
