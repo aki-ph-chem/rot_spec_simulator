@@ -8,4 +8,7 @@ plot: ${res}
 ${res}:
 	cargo run --example ${gen_rule} ${res} 
 
-.PHONY: plot
+clean:
+	rm *.log *.csv
+
+.PHONY: plot clean

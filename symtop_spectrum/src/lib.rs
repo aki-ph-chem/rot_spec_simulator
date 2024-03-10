@@ -52,13 +52,14 @@ impl SymtopSpectrum {
                                 if *k_excited == k_ground + delta_k {
                                     let delta_e = energy_k_excited - energy_k_ground;
 
-                                    let (k_b, temp) = (1.380649e-23 / 6.62607015e-34, 300.0);
-                                    let boltzman_factor = (-delta_e / (k_b * temp)).exp();
-                                    /*
-                                    let boltzman_factor = (-energy_k_excited / (k_b * temp)).exp()
-                                        - (-energy_k_ground / (k_b * temp)).exp();
-                                    */
-                                    //eprintln!("boltzman_factor: {}", boltzman_factor);
+                                    let (k_b, temp) =
+                                        (1.380649e-23 / (6.62607015e-34 * 299792458.0), 300.0);
+                                    let (p_ground, p_excited) = (
+                                        (-energy_k_ground / (k_b * temp)).exp(),
+                                        (-energy_k_excited / (k_b * temp)).exp(),
+                                    );
+                                    //let boltzman_factor = p_excited;
+                                    let boltzman_factor = p_excited - p_ground;
                                     //let boltzman_factor = 1.0;
 
                                     let intensity = self.transition.intensity(
