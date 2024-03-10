@@ -1,6 +1,7 @@
 use eigen_state::EnergyManifold;
 use transition::TransitionSymTop;
 use wigner_j::utl::Binomial;
+pub mod fixed_j;
 
 #[derive(Debug)]
 pub struct SymtopSpectrum {
