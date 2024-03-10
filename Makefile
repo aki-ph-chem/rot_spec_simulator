@@ -6,6 +6,6 @@ plot: ${res}
 	poetry run python ${python_src}.py $<
 
 ${res}:
-	cargo run --example ${gen_rule} > ${res}
+	cargo run --example ${gen_rule} ${res} 
 
 .PHONY: plot
