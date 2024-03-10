@@ -94,6 +94,11 @@ impl TransitionSymTop {
                 + self.mu_z * three_j_3)
                 .powi(2);
 
+        print!("j_ground, k_gounrd, j_excited, k_excited,");
+        print!("int_value, ");
+        print!("{j_ground}, {k_ground}, {j_excited}, {k_excited},");
+        println!("{int_value}");
+
         int_value
     }
 }
