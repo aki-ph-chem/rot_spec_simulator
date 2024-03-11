@@ -17,6 +17,10 @@ path = "examples/ex_symtop_spectrum_2.rs"
 name = "ex_j_fixed"
 path = "examples/ex_j_fixed.rs"
 
+[[example]]
+name = "ex_mw"
+path = "examples/ex_mw.rs"
+
 [dependencies]
 transition = {path = "../transition"}
 eigen_state = {path = "../eigen_state"}

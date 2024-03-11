@@ -2,6 +2,7 @@ use eigen_state::EnergyManifold;
 use transition::TransitionSymTop;
 use wigner_j::utl::Binomial;
 pub mod fixed_j;
+pub mod micro_wave;
 
 #[derive(Debug)]
 pub struct SymtopSpectrum {
