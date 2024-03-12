@@ -1,5 +1,5 @@
 [workspace]
 resolver = "2"
-members = [ "eigen_state", "symtop_spectrum", "transition",
+members = [ "eigen_state", "line_shape", "symtop_spectrum", "transition",
     "wigner_j",
 ]

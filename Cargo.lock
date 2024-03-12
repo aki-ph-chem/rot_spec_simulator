@@ -7,6 +7,10 @@ name = "eigen_state"
 version = "0.1.0"
 
 [[package]]
+name = "line_shape"
+version = "0.1.0"
+
+[[package]]
 name = "symtop_spectrum"
 version = "0.1.0"
 dependencies = [

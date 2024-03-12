@@ -1,0 +1,12 @@
+[package]
+name = "line_shape"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[example]]
+name = "ex_lorentz"
+path = "examples/ex_lorentz.rs"
+
+[dependencies]
