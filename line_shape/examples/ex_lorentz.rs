@@ -29,7 +29,7 @@ fn convolute_line_shape_function(
 
     for i in 0..raw_signal.0.len() {
         for j in 0..x_signal.len() {
-            y_signal[j] += raw_signal.0[i] * line_profile.lorentz(x_signal[j], raw_signal.1[i]);
+            y_signal[j] += raw_signal.1[i] * line_profile.lorentz(x_signal[j], raw_signal.0[i]);
         }
     }
 
