@@ -3,6 +3,13 @@
 version = 3
 
 [[package]]
+name = "diatomic_spectrum"
+version = "0.1.0"
+dependencies = [
+ "line_shape",
+]
+
+[[package]]
 name = "eigen_state"
 version = "0.1.0"
 
