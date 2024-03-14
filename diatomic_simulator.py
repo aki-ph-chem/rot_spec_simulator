@@ -22,33 +22,11 @@ class Population:
         wn = 2*self.molecule.rot_const *(x + 1)
         '''
         Z: partition function
-        boltzaman factor: exp(-E_{upper}/k_BT) / Z 
-        '''
-        boltzman_factor = np.exp(-energy_vec(x) /self.temp)
-        population_array = (x + 1) * boltzman_factor 
-        intensity = population_array / ((2* x + 1) * boltzman_factor).sum() 
-
-        return (wn, intensity)
-
-class Population2:
-    def __init__(self, temp: float, j_max: int, rot_const: float) -> None:
-        self.temp = temp
-        self.j_max = j_max
-        self.molecule = DiatomicMolecule(rot_const)
-
-    def spectrum(self) -> tuple[np.ndarray, np.ndarray]:
-        x = np.arange(0, self.j_max, 1)
-        energy_vec = np.vectorize(self.molecule.energy)
-
-        wn = 2*self.molecule.rot_const *(x + 1)
-        '''
-        Z: partition function
         boltzaman factor: exp(-E_{lower}/k_BT) /Z - exp(-E_{upper}/k_BT) /Z
         '''
-        boltzman_factor = np.exp(-energy_vec(x) /self.temp) - np.exp(-energy_vec(x + 1) /self.temp)
 
-        population_array = (x + 1) * boltzman_factor 
-        intensity = population_array / ((2* x + 1) * boltzman_factor).sum() 
+        boltzman_factor = ((x + 1) / (2 * x + 1)) *(np.exp(-energy_vec(x) /self.temp) - np.exp(-energy_vec(x + 1) /self.temp))
+        intensity = boltzman_factor / ((2* x + 1) * np.exp(-energy_vec(x) / self.temp)).sum() 
 
         return (wn, intensity)
 
@@ -86,28 +64,23 @@ def convolute_line_shape(
     return (x_signal, y_signal)
 
 def main() -> None:
-    temperature = 120 
+    temperature = 300 
 
-    pop_1 = Population(temperature, 30, 2.0)
-    spectrum_1 = pop_1.spectrum()
-
-    pop_2 = Population2(temperature, 30, 2.0)
-    spectrum_2 = pop_2.spectrum()
+    pop = Population(temperature, 30, 1.0)
+    spectrum = pop.spectrum()
 
     lorentz_func = LorentzianShape(0.4)
-    spectrum_2_lorentz_width = convolute_line_shape(0.0, 120, 0.01, lorentz_func.lorenth, spectrum_2)
+    spectrum_lorentz_width = convolute_line_shape(0.0, 120, 0.01, lorentz_func.lorenth, spectrum)
 
     gauss_func = GaussianShape(0.4)
-    spectrum_2_gauss_width = convolute_line_shape(0.0, 120, 0.01, gauss_func.gauss, spectrum_2)
+    spectrum_gauss_width = convolute_line_shape(0.0, 120, 0.01, gauss_func.gauss, spectrum)
 
-    plt.scatter(spectrum_1[0], spectrum_1[1], color = 'red', label = "spectrum_1")
-    plt.scatter(spectrum_2[0], spectrum_2[1], color = 'blue', label = "spectrum_2")
-    plt.plot(spectrum_2_lorentz_width[0], spectrum_2_lorentz_width[1], color = 'green', label = "spectrum_2_lorentz_width")
-    plt.plot(spectrum_2_gauss_width[0], spectrum_2_gauss_width[1], color = 'lime', label = "spectrum_2_gauss_width")
+    plt.scatter(spectrum[0], spectrum[1], color = 'blue', label = "spectrum")
+    plt.plot(spectrum_lorentz_width[0], spectrum_lorentz_width[1], color = 'green', label = "spectrum_lorentz_width")
+    plt.plot(spectrum_gauss_width[0], spectrum_gauss_width[1], color = 'lime', label = "spectrum_gauss_width")
 
     plt.legend()
     plt.show()
-
 
 if __name__ == "__main__":
     main()
