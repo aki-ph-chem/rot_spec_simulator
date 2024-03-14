@@ -42,8 +42,9 @@ impl Spectrum {
 
         let raw_signal_y = range_j
             .map(|j| {
-                ((j as f64 + 1.0) * (-self.molecule.energy(j) / self.temperature).exp()
-                    - (j as f64 + 2.0) * (-self.molecule.energy(j + 1) / self.temperature).exp())
+                (j as f64 + 1.0) / (2.0 * j as f64 + 1.0)
+                    * ((-self.molecule.energy(j) / self.temperature).exp()
+                        - (-self.molecule.energy(j + 1) / self.temperature).exp())
                     / partition_func
             })
             .collect();
