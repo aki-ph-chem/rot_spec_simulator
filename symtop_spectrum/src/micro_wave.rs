@@ -45,7 +45,7 @@ impl SymtopSpectrum {
                                     ((-energy_k_ground * convert_const) / (k_b * temp)).exp(),
                                     ((-energy_k_excited * convert_const) / (k_b * temp)).exp(),
                                 );
-                                let boltzman_factor = p_ground - p_excited;
+                                let boltzman_factor = (p_ground - p_excited).abs();
 
                                 let intensity = self.transition.intensity(
                                     j_gound,

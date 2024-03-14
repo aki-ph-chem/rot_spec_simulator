@@ -25,3 +25,4 @@ path = "examples/ex_mw.rs"
 transition = {path = "../transition"}
 eigen_state = {path = "../eigen_state"}
 wigner_j = {path = "../wigner_j"}
+line_shape = {path = "../line_shape"}
