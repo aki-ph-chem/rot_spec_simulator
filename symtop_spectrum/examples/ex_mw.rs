@@ -32,7 +32,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let spectrum_1 =
         convolute_line_shape_function_tup(-120.0, 120.0, 0.01, &line_profile, &spec_1.spectrum);
 
-    out_csv(&spectrum_1.0, &spectrum_1.1, &argv[1])?;
+    let file_name_result = argv[1].clone() + ".csv";
+    out_csv(&spectrum_1.0, &spectrum_1.1, &file_name_result)?;
+
+    let file_name_log = argv[1].clone() + ".log";
+    spec_1.out_line_list(&file_name_log)?;
 
     Ok(())
 }
