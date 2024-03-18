@@ -88,17 +88,12 @@ impl TransitionSymTop {
         let three_j_2 = self.tree_j_list.three_j_2.wigner_3j(binomial_list);
         let three_j_3 = self.tree_j_list.three_j_3.wigner_3j(binomial_list);
 
-        let int_value = coefficient
+        let intensity = coefficient
             * (self.mu_x * (three_j_1 - three_j_2)
                 + self.mu_y * (three_j_1 + three_j_2)
                 + self.mu_z * three_j_3)
                 .powi(2);
 
-        print!("j_ground, k_gounrd, j_excited, k_excited,");
-        print!("int_value, ");
-        print!("{j_ground}, {k_ground}, {j_excited}, {k_excited},");
-        println!("{int_value}");
-
-        int_value
+        intensity
     }
 }

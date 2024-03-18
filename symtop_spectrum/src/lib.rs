@@ -1,8 +1,37 @@
 use eigen_state::EnergyManifold;
+use std::error::Error;
+use std::{fs::File, io::Write};
 use transition::TransitionSymTop;
 use wigner_j::utl::Binomial;
 pub mod fixed_j;
 pub mod micro_wave;
+
+#[derive(Debug)]
+struct LineList {
+    j_ground: i64,
+    k_ground: i64,
+    j_excited: i64,
+    k_excited: i64,
+    intensity: f64,
+}
+
+impl LineList {
+    pub fn new(
+        j_ground: i64,
+        k_ground: i64,
+        j_excited: i64,
+        k_excited: i64,
+        intensity: f64,
+    ) -> Self {
+        Self {
+            j_ground,
+            k_ground,
+            j_excited,
+            k_excited,
+            intensity,
+        }
+    }
+}
 
 #[derive(Debug)]
 pub struct SymtopSpectrum {
@@ -11,6 +40,7 @@ pub struct SymtopSpectrum {
     energy_manifold_ground: EnergyManifold,
     energy_manifold_excited: EnergyManifold,
     transition: TransitionSymTop,
+    line_list: Vec<LineList>,
 }
 
 impl SymtopSpectrum {
@@ -30,6 +60,7 @@ impl SymtopSpectrum {
             energy_manifold_ground: EnergyManifold::new(j_max, a_ground, b_ground),
             energy_manifold_excited: EnergyManifold::new(j_max, a_excited, b_excited),
             transition: TransitionSymTop::new(mu_x, mu_y, mu_z),
+            line_list: vec![],
         }
     }
 
@@ -75,6 +106,14 @@ impl SymtopSpectrum {
                                     ) * boltzman_factor;
 
                                     self.spectrum.push((delta_e, intensity));
+
+                                    self.line_list.push(LineList::new(
+                                        j_gound,
+                                        *k_ground,
+                                        j_gound + delta_j,
+                                        *k_excited,
+                                        intensity,
+                                    ));
                                 }
                             }
                         }
@@ -82,5 +121,26 @@ impl SymtopSpectrum {
                 }
             }
         }
+    }
+
+    pub fn out_line_list(&self, path_to_file: &str) -> Result<(), Box<dyn Error>> {
+        let mut file = File::create(path_to_file)?;
+        writeln!(file, "j_ground,k_ground,j_excited,k_excited,intensity")?;
+
+        for LineList {
+            j_ground,
+            k_ground,
+            j_excited,
+            k_excited,
+            intensity,
+        } in self.line_list.iter()
+        {
+            writeln!(
+                file,
+                "{j_ground},{k_ground},{j_excited},{k_excited},{intensity}"
+            )?;
+        }
+
+        Ok(())
     }
 }
