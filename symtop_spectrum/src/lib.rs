@@ -51,17 +51,20 @@ impl SymtopSpectrum {
                         {
                             for (k_excited, energy_k_excited) in k_sub_structure_excited {
                                 if *k_excited == k_ground + delta_k {
+                                    let energy_ofset_excited = 1500.0;
+                                    let (k_b, temp) = (1.380649e-23, 120.0);
+
                                     let delta_e = energy_k_excited - energy_k_ground;
 
-                                    let (k_b, temp) =
-                                        (1.380649e-23 / (6.62607015e-34 * 299792458.0), 300.0);
+                                    let convert_const = 299792458.0 * 6.62607015e-34 * 1.0e2;
                                     let (p_ground, p_excited) = (
-                                        (-energy_k_ground / (k_b * temp)).exp(),
-                                        (-energy_k_excited / (k_b * temp)).exp(),
+                                        ((-energy_k_ground * convert_const) / (k_b * temp)).exp(),
+                                        ((-(energy_k_excited + energy_ofset_excited)
+                                            * convert_const)
+                                            / (k_b * temp))
+                                            .exp(),
                                     );
-                                    //let boltzman_factor = p_excited;
-                                    let boltzman_factor = p_excited - p_ground;
-                                    //let boltzman_factor = 1.0;
+                                    let boltzman_factor = (p_ground - p_excited).abs();
 
                                     let intensity = self.transition.intensity(
                                         j_gound,

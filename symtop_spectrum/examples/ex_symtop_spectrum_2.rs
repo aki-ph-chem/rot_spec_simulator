@@ -1,12 +1,17 @@
+use line_shape::{convolute_line_shape_function_tup, LineShape};
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
 use symtop_spectrum::SymtopSpectrum;
 
-fn out_csv(xy_data: &Vec<(f64, f64)>, file_name: &str) -> Result<(), Box<dyn Error>> {
-    let mut file = File::create(file_name)?;
+fn out_csv(x_data: &Vec<f64>, y_data: &Vec<f64>, path_to_file: &str) -> Result<(), Box<dyn Error>> {
+    if x_data.len() != y_data.len() {
+        panic!("Error: length of two vectors in not equal");
+    }
 
-    for (x, y) in xy_data {
+    let mut file = File::create(path_to_file)?;
+
+    for (x, y) in x_data.iter().zip(y_data.iter()) {
         writeln!(file, "{x},{y}")?;
     }
 
@@ -23,9 +28,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     // gound state: A = 10.0, B = 1.0
     // excited state: A = 10.0, B = 1.0
     // j_max = 20
-    let mut spec_1 = SymtopSpectrum::new(20, 10.0, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0);
+    let mut spec_1 = SymtopSpectrum::new(40, 10.0, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0);
     spec_1.calc_spectrum();
-    out_csv(&spec_1.spectrum, &argv[1])?;
+    let line_profile = LineShape::new(0.04);
+    let spectrum_1 =
+        convolute_line_shape_function_tup(-50.0, 50.0, 0.01, &line_profile, &spec_1.spectrum);
+
+    out_csv(&spectrum_1.0, &spectrum_1.1, &argv[1])?;
 
     Ok(())
 }
