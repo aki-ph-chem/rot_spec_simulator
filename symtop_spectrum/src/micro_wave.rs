@@ -1,34 +1,8 @@
+use crate::LineList;
 use eigen_state::EnergyManifold;
 use std::{error::Error, fs::File, io::Write};
 use transition::TransitionSymTop;
 use wigner_j::utl::Binomial;
-
-#[derive(Debug)]
-struct LineList {
-    j_ground: i64,
-    k_ground: i64,
-    j_excited: i64,
-    k_excited: i64,
-    intensity: f64,
-}
-
-impl LineList {
-    pub fn new(
-        j_ground: i64,
-        k_ground: i64,
-        j_excited: i64,
-        k_excited: i64,
-        intensity: f64,
-    ) -> Self {
-        Self {
-            j_ground,
-            k_ground,
-            j_excited,
-            k_excited,
-            intensity,
-        }
-    }
-}
 
 #[derive(Debug)]
 pub struct SymtopSpectrum {

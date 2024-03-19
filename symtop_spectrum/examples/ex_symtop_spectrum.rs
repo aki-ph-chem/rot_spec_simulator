@@ -1,7 +1,7 @@
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
-use symtop_spectrum::SymtopSpectrum;
+use symtop_spectrum::symtop::SymtopSpectrum;
 
 fn out_csv(xy_data: &Vec<(f64, f64)>, file_name: &str) -> Result<(), Box<dyn Error>> {
     let mut file = File::create(file_name)?;

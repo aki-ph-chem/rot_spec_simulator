@@ -2,7 +2,7 @@ use line_shape::{convolute_line_shape_function_tup, LineShape};
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
-use symtop_spectrum::SymtopSpectrum;
+use symtop_spectrum::symtop::SymtopSpectrum;
 
 fn out_csv(x_data: &Vec<f64>, y_data: &Vec<f64>, path_to_file: &str) -> Result<(), Box<dyn Error>> {
     if x_data.len() != y_data.len() {
