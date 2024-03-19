@@ -8,6 +8,7 @@ use wigner_j::utl::Binomial;
 #[derive(Debug)]
 pub struct SymtopSpectrum {
     j_max: i64,
+    temperature: f64,
     pub spectrum: Vec<(f64, f64)>,
     energy_manifold_ground: EnergyManifold,
     energy_manifold_excited: EnergyManifold,
@@ -18,6 +19,7 @@ pub struct SymtopSpectrum {
 impl SymtopSpectrum {
     pub fn new(
         j_max: i64,
+        temperature: f64,
         a_ground: f64,
         b_ground: f64,
         a_excited: f64,
@@ -28,6 +30,7 @@ impl SymtopSpectrum {
     ) -> Self {
         Self {
             j_max,
+            temperature,
             spectrum: vec![],
             energy_manifold_ground: EnergyManifold::new(j_max, a_ground, b_ground),
             energy_manifold_excited: EnergyManifold::new(j_max, a_excited, b_excited),
@@ -55,16 +58,18 @@ impl SymtopSpectrum {
                             for (k_excited, energy_k_excited) in k_sub_structure_excited {
                                 if *k_excited == k_ground + delta_k {
                                     let energy_ofset_excited = 1500.0;
-                                    let (k_b, temp) = (1.380649e-23, 120.0);
+                                    let k_b = 1.380649e-23;
 
                                     let delta_e = energy_k_excited - energy_k_ground;
 
                                     let convert_const = 299792458.0 * 6.62607015e-34 * 1.0e2;
                                     let (p_ground, p_excited) = (
-                                        ((-energy_k_ground * convert_const) / (k_b * temp)).exp(),
+                                        ((-energy_k_ground * convert_const)
+                                            / (k_b * self.temperature))
+                                            .exp(),
                                         ((-(energy_k_excited + energy_ofset_excited)
                                             * convert_const)
-                                            / (k_b * temp))
+                                            / (k_b * self.temperature))
                                             .exp(),
                                     );
                                     let boltzman_factor = (p_ground - p_excited).abs();

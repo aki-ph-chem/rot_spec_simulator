@@ -7,6 +7,7 @@ use wigner_j::utl::Binomial;
 #[derive(Debug)]
 pub struct SymtopSpectrum {
     j_max: i64,
+    temperature: f64,
     pub spectrum: Vec<(f64, f64)>,
     energy_manifold: EnergyManifold,
     transition: TransitionSymTop,
@@ -14,9 +15,18 @@ pub struct SymtopSpectrum {
 }
 
 impl SymtopSpectrum {
-    pub fn new(j_max: i64, a: f64, b: f64, mu_x: f64, mu_y: f64, mu_z: f64) -> Self {
+    pub fn new(
+        j_max: i64,
+        temperature: f64,
+        a: f64,
+        b: f64,
+        mu_x: f64,
+        mu_y: f64,
+        mu_z: f64,
+    ) -> Self {
         Self {
             j_max,
+            temperature,
             spectrum: vec![],
             energy_manifold: EnergyManifold::new(j_max, a, b),
             transition: TransitionSymTop::new(mu_x, mu_y, mu_z),
@@ -42,12 +52,15 @@ impl SymtopSpectrum {
                             if *k_excited == *k_ground {
                                 let delta_e = energy_k_excited - energy_k_ground;
 
-                                let (k_b, temp) = (1.380649e-23, 300.0);
+                                let k_b = 1.380649e-23;
                                 // ch x 10^2
                                 let convert_const = 299792458.0 * 6.62607015e-34 * 1.0e2;
                                 let (p_ground, p_excited) = (
-                                    ((-energy_k_ground * convert_const) / (k_b * temp)).exp(),
-                                    ((-energy_k_excited * convert_const) / (k_b * temp)).exp(),
+                                    ((-energy_k_ground * convert_const) / (k_b * self.temperature))
+                                        .exp(),
+                                    ((-energy_k_excited * convert_const)
+                                        / (k_b * self.temperature))
+                                        .exp(),
                                 );
                                 let boltzman_factor = (p_ground - p_excited).abs();
 

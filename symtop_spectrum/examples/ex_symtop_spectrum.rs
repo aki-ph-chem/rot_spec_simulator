@@ -20,7 +20,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         std::process::exit(1);
     }
 
-    let mut spec_1 = SymtopSpectrum::new(10, 1.2, 1.1, 1.5, 1.3, 1.0, 1.0, 1.0);
+    let mut spec_1 = SymtopSpectrum::new(20, 300.0, 1.5, 1.1, 1.45, 1.06, 0.0, 0.0, 1.0);
     spec_1.calc_spectrum();
     out_csv(&spec_1.spectrum, &argv[1])?;
 

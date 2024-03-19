@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         std::process::exit(1);
     }
 
-    let mut spec_1 = SymtopSpectrum::new(30, 10.0, 1.0, 0.0, 0.0, 1.0);
+    let mut spec_1 = SymtopSpectrum::new(30, 300.0, 10.0, 1.0, 0.0, 0.0, 1.0);
     spec_1.calc_spectrum();
 
     let line_profile = LineShape::new(0.04);

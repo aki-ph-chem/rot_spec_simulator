@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // gound state: A = 10.0, B = 1.0
     // excited state: A = 10.0, B = 1.0
     // j_max = 20
-    let mut spec_1 = SymtopSpectrum::new(40, 10.0, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0);
+    let mut spec_1 = SymtopSpectrum::new(40, 300.0, 10.0, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0);
     spec_1.calc_spectrum();
     let line_profile = LineShape::new(0.04);
     let spectrum_1 =
